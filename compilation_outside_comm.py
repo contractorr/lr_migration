@@ -58,7 +58,7 @@ for input_file in input_files:
         prefix = 'Y' 
 
 
-    fund_details, fund_sheets, fund_sheets_euros, all_fund_sheets = mig.extract_funds(input_file,prefix) 
+    fund_details, fund_sheets, fund_sheets_euros, all_fund_sheets = mig.extract_funds(input_file,prefix,env='UAT') 
     """  
     for fund_name, sheet_names in all_fund_sheets.items():
         for sheet_name in sheet_names:

@@ -4,20 +4,23 @@ import os
 import mig_functions as mig
 import pandas as pd
 import datetime as dt
+import log 
+logger = log.get_logger('root')
+log.update_handler(logger,'Bank Ops')
 
-
-dest_directory = 'C:/Users/RajContractor/Documents/Python Files/Dev/LR Migration/Migrated'
-
+dest_directory = 'C:/Users/RajContractor/Documents/Python Files/Dev/LR Migration/Migrated/Bank Ops'
+#dest_file = dest_directory + f'/Bank Operations.xlsx'  
     
 ##############################################################################################################
-# Destination of investee fund op files
-os.chdir('C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/Investee Fund Ops')
-investee_files = glob.glob('*.xlsx')  
+
 
 # Investee Fund Ops
 print(f'Working On: Investee Fund Ops')
+os.chdir('C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/2 UAT Import Files/Investee Fund Ops')
+investee_files = glob.glob('*.xlsx')  
 concat_fund_ops = pd.DataFrame()
-dest_file_fo = dest_directory + f'/Bank Operations - Investee Fund Ops - RC Migrated.xlsx'  
+dest_file = dest_directory + f'/Investee Fund Ops.xlsx'  
+
 for input_file in investee_files:
     # Add the file name to the dest_directory and log_file_directory
     name = input_file.split('Fund Operations')[0] 
@@ -27,20 +30,28 @@ for input_file in investee_files:
     
 
 fund_ops_post_starting_balance = concat_fund_ops[pd.to_datetime(concat_fund_ops['SETTLEMENTDATE1']) >= dt.datetime(2021,1,1)]
-mig.migrate_investee_fund_op_bank_ops(fund_ops_post_starting_balance, dest_file_fo)
+mig.migrate_investee_fund_op_bank_ops(fund_ops_post_starting_balance, dest_file)
     
 # Managed Fund Ops
 print(f'Working On: Managed Fund Ops')   
-managed_fund_op_file = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/Managed Fund Ops/Managed Fund Operations - RC Migrated.xlsx'
-dest_file_fo = dest_directory + f'/Bank Operations - Managed Fund Ops - RC Migrated.xlsx'
-mig.migrate_managed_fund_op_bank_ops(managed_fund_op_file, dest_file_fo)
+managed_fund_op_file = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/2 UAT Import Files/Managed Fund Ops/Managed Fund Operations - RC Migrated.xlsx'
+dest_file = dest_directory + f'/Managed Fund Ops.xlsx'
+
+mig.migrate_managed_fund_op_bank_ops(managed_fund_op_file, dest_file)
 
 # Cash Transfers    
 print(f'Working On: Cash Transfers')   
-dest_file_ct = dest_directory + f'/Bank Operations - Cash Transfers - RC Migrated.xlsx'
-mig.migrate_cash_transfer_bank_ops(dest_file_ct)
+dest_file = dest_directory + f'/Cash Transfers.xlsx'
+mig.migrate_cash_transfer_bank_ops(dest_file)
 
 # Fees
-print(f'Working On: Fees') 
-dest_file_fees = dest_directory + f'/Bank Operations - Managed Fund Fees - RC Migrated.xlsx'
-mig.migrate_managed_fee_bank_ops(dest_file_fees)
+print(f'Working On: Managed Fund Fees') 
+dest_file = dest_directory + f'/Managed Fund Fees.xlsx'
+#mig.migrate_managed_fee_bank_ops(dest_file)
+
+# Fees and Incomes
+print(f'Working On: Fees and Incomes') 
+dest_file = dest_directory + f'/Fees and Incomes.xlsx'
+mig.migrate_fee_and_income_bank_ops(dest_file)
+
+

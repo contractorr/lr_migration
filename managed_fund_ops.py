@@ -6,16 +6,16 @@ import os
 import mig_functions as mig
 
 # Destination of key files
-os.chdir('C:/Users/RajContractor/Documents/Python Files/Dev/LR Migration/Migrate These')  
+os.chdir('Migrate These')  
 input_files = glob.glob('[!~]*.xlsx')         
 dest_directory = 'C:/Users/RajContractor/Documents/Python Files/Dev/LR Migration/Migrated'
 ##############################################################################################################
 
 # Start logging
-if os.path.exists(f'Managed.log'): 
-    os.remove(f'Managed.log')
+if os.path.exists(f'Managed_fund_ops.log'): 
+    os.remove(f'Managed_fund_ops.log')
 
-log.update_handler(logger,'Managed')
+log.update_handler(logger,'Managed_fund_ops')
 
 for input_file in input_files:
     # Add the file name to the dest_directory and log_file_directory

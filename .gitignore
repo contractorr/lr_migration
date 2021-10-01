@@ -1,0 +1,16 @@
+# ignore all logs
+*.log
+*.xlsx
+*.csv
+*.cfg
+*.txt
+.vscode/
+LR Migration.code-workspace
+Lib/
+M Shares Fund Ops.xlsx
+Migrate - All Files/
+Migrate These/
+Migrated/
+Scripts/
+Test Data/
+__pycache__/
