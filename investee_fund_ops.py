@@ -4,11 +4,21 @@ logger = log.get_logger('root')
 import glob
 import os 
 import mig_functions as mig
+import pandas as pd
 
 # Destination of key files
 os.chdir(r'C:\Users\RajContractor\Documents\Python Files\Dev\LR Migration\Migrate These')
 input_files = glob.glob('[!~]*.xlsx')              
 dest_directory = r'C:\Users\RajContractor\Documents\Python Files\Dev\LR Migration\Migrated'
+# Get FX Rates
+fx_rates_file = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/2 UAT Import Files/01 FX Rates.xlsx'
+fx_rates = pd.read_excel(fx_rates_file, index_col=None,header=2, usecols='C:Q')[1:]
+fx_rates.rename({'Rates.Destination Currency': 'dst_ccy'
+                ,'Rates.Source Currency': 'src_ccy'
+                ,'Rates.Reference date': 'date'
+                ,'Rates.Rate': 'rate'
+                ,'Rates.Description': 'description'}
+                    , axis='columns', inplace=True)
 ##############################################################################################################
 
 # Replace backslashes in dest_directory
@@ -36,7 +46,7 @@ for input_file in input_files:
     logger.info(f'Started logging for {file_name}')
     print(f'File: {file_name}')       
 
-    mig.migrate_investee_data(input_file, dest_file, file_name,env='UAT')
+    mig.migrate_investee_data(input_file, dest_file,file_name,fx_rates=fx_rates,env='UAT')
     
 
 
