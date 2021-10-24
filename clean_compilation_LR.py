@@ -3,15 +3,15 @@ import mig_functions as mig
 from fuzzywuzzy import process
 
 # Read in Compilation data
-comp_file_lr = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Data Migration/Investee Fund Operation Compilation Files/Returned by LR/Compilation_LR.xlsx'
-comp_fees = pd.read_excel(comp_file_lr, index_col=None, sheet_name='Fees (2)')
+comp_file_lr = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Data Migration/Investee Fund Operation Compilation Files/Returned by LR/Compilation_LR_2.xlsx'
+comp_fees = pd.read_excel(comp_file_lr, index_col=None, sheet_name='Fees')
 comp_fees['investee_fund'] = comp_fees['Investee Fund']
 # All rows with non-zero capital gains from return of capital/fees sheet should have been copied to the Capital Gains sheet, so we don't need to read in the return of capital sheet
-comp_cap_gains = pd.read_excel(comp_file_lr, index_col=None, sheet_name='Capital Gains (2)')
+comp_cap_gains = pd.read_excel(comp_file_lr, index_col=None, sheet_name='Capital Gains')
 comp_cap_gains['investee_fund'] = comp_cap_gains['Investee Fund']
 
 # Read in official fund names
-fund_import_file = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/UAT Import Files/05 Funds.xlsx'
+fund_import_file = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Import Files/ITV Import Files/2 UAT Import Files/05 Funds.xlsx'
 
 # Replace the shares in our compilation data
 prev_share = ''
@@ -71,8 +71,9 @@ for fee in comp_fees.itertuples():
     if fee.old_description != fee.old_description:
         comp_fees.loc[fee.Index,'old_description'] = fee.Description
 
+
 # Save our file
-with pd.ExcelWriter('C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Data Migration/Investee Fund Operation Compilation Files/Returned by LR/Compilation_LR_Clean.xlsx') as writer:
+with pd.ExcelWriter('C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/Data Migration/Investee Fund Operation Compilation Files/Returned by LR/Compilation_LR_Clean_2.xlsx') as writer:
     comp_fees.to_excel(writer,sheet_name='Fees',index=False,columns=['Share','Investee Fund','Date','old_description','Description','fee_amount','roc_amount','cg_amount','Mapping','investee_fund','SplitInd']) 
-    comp_cap_gains.to_excel(writer,sheet_name='Capital Gains',index=False,columns=['Share','Investee Fund','Date','Description','fee_amount','roc_amount','cg_amount','Mapping','Recallable/Non Recallable?','investee_fund','Fund Op','SplitInd'])
+    comp_cap_gains.to_excel(writer,sheet_name='Capital Gains',index=False,columns=['Share','Investee Fund','Date','Description','fee_amount','roc_amount','cg_amount','Mapping','investee_fund','old_description','SplitInd'])
 

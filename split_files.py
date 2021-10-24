@@ -29,7 +29,7 @@ def split_files(input_file):
                 share = share.replace('Share','shares')
                 share = re.match('[\D]*shares',share).group()
                 files[share] = []
-                dest_file = dest_directory + f'/LRI_{share}@2021 Q1.xlsx'
+                dest_file = dest_directory + f'/LRI_{share}@2021 Q3.xlsx'
                 if 'writer' in globals():
                     writer.close()
                 writer = pd.ExcelWriter(dest_file)
@@ -49,7 +49,7 @@ def split_files(input_file):
     return files    
 
 def split_files_rhone():
-    input_file = 'C:/Users/RajContractor/IT-Venture Ltd/Lion River - Documents/LR Reports/Investee Funds/JV Rhone Performance (B-C-D- F-H-I-J-K-L-P-Q-S-T-X-Y) @2021 Q1.xlsx'
+    input_file = 'C:/Users/RajContractor/Documents/Python Files/Dev/LR Migration/Migrate - All Files/Catch Up/JV Rhone Performance_@2021 Q3.xlsx'
     xl = pd.ExcelFile(input_file)
 
     # Loop through sheets
@@ -66,7 +66,7 @@ def split_files_rhone():
             share = sheet.title
             share = share.replace('Inv','shares')
             files[share] = []
-            dest_file = dest_directory + f'/LRI_{share}@2021 Q1.xlsx'
+            dest_file = dest_directory + f'/LRI_{share}@2021 Q3.xlsx'
             if 'writer' in globals():
                 writer.close()
             writer = pd.ExcelWriter(dest_file)         
